@@ -2,22 +2,33 @@
 
 //Lets require the needed modules
 var http = require('http');
-var strftime = require('strftime');
-var fs = require('fs');
-
-//Lets define a port we want to listen to
-const PORT = 8080;
+var t2m = require('through2-map');
 
 // Define server, handler, and listen
 var server = http.createServer(function(req, res) {
-    console.log('client connected with Path = "' + req.url + '"');
+    var totalBytes = 0;
+    
     res.on('finish', function() {
-       console.log('request all done');
+        console.log('request all done; processed ' + totalBytes + ' total bytes');
+        totalBytes = 0;
     });
-    var fileRes = fs.createReadStream(process.argv[2]);
-    fileRes.pipe(res);
+
+    // if not a POST, close connection
+    if (req.method != 'POST') {
+        console.log('request not POST; request = ' + req.method);
+        res.end();
+    }
+    
+    console.log('client request received = "' + req.method + ':  ' + req.url + '"');
+    req.pipe(t2m(function(chunk) {
+        var doodah = chunk.toString().toUpperCase();
+        totalBytes += doodah.length;
+        return doodah;
+    })).pipe(res);
+    
+    console.log('done chunks');
 });
 
-server.listen(8080, function() {
+server.listen(Number(process.argv[2]), function() {
     console.log('server is listening');
 });
