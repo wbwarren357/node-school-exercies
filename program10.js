@@ -5,7 +5,7 @@ var net = require('net');
 var strftime = require('strftime');
 
 //Lets define a port we want to listen to
-const PORT=8080; 
+const PORT = 8080; 
 
 // Define server, handler, and listen
 var server = net.createServer(function(connection) { 
