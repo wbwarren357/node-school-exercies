@@ -3,6 +3,6 @@ var path = require('path');
 
 var app = express();
 
-app.use(express.static(process.argv[3] || path.join(__dirname, 'public')));
+app.use(express.static(process.argv[3] || path.join(__dirname, 'public-02')));
 
 app.listen(process.argv[2]);
