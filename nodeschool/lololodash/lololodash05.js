@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
 // include the Lo-Dash library
 var _ = require("lodash");
 
 var testWords = ['Test', 'Hello', 'World', 'Node', 'JavaScript'];
 
-var worker = function(words) {
-    return( 
+var worker = function (words) {
+    return (
         _.chain(words)
-        .map(function(word) {
-            return word.toUpperCase() + 'CHAINED';
+        .map(function (word) {
+                return (word.toUpperCase() + 'CHAINED');
             }
         )
         .sort()
