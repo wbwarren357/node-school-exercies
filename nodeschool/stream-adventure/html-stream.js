@@ -1,0 +1,17 @@
+  var trumpet = require('trumpet');
+  var through = require('through2');
+  var tr = trumpet();
+  
+  var loud = tr.select('.loud').createStream();
+  loud.pipe(through(function (buf, _, next) {
+      this.push(buf.toString().toUpperCase());
+      next();
+  })).pipe(loud);
+  
+  // var soft = tr.select('p').createStream();
+  // soft.pipe(through(function (buf, _, next) {
+  //     this.push(buf.toString().toLowerCase());
+  //     next();
+  // })).pipe(soft);
+
+  process.stdin.pipe(tr).pipe(process.stdout);
